@@ -4,12 +4,13 @@ import { TagDTO } from './tag';
 type BusinessDTO = {
   id: string;
   name: string;
-  description?: string;
+  description: string;
   address: string;
   website?: string;
   nip: string;
   pkd: string;
   imageUrl?: string;
+  logoUrl?: string;
   tags: TagDTO[];
   coords: Coordinates;
 };
