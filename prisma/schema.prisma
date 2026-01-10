@@ -8,14 +8,16 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  name          String
-  password      String
-  image         String?
-  emailVerified DateTime?
-  createdAt     DateTime  @default(now())
-  sessions      Session[]
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  sessions Session[]
+  messages Message[] @relation("UserMessages")
+  chats    Chat[]
 }
 
 model Session {
@@ -25,4 +27,81 @@ model Session {
   expires      DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Business {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  address     String
+  website     String?
+  nip         String
+  pkd         String
+  imageUrl    String?
+  logoUrl     String?
+  latitude    Float
+  longitude   Float
+  createdAt   DateTime @default(now())
+
+  adspaces Adspace[]
+  tags     Tag[]
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  businesses Business[]
+}
+
+model AdspaceType {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+
+  adspaces Adspace[]
+}
+
+model Adspace {
+  id                String   @id @default(cuid())
+  businessId        String
+  typeId            String
+  name              String
+  description       String?
+  maxWidth          Int
+  maxHeight         Int
+  imageUrl          String
+  isBarterAvailable Boolean  @default(false)
+  pricePerDay       Float?
+  inUse             Boolean  @default(false)
+  createdAt         DateTime @default(now())
+
+  business Business    @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  type     AdspaceType @relation(fields: [typeId], references: [id], onDelete: Restrict)
+  chats    Chat[]
+}
+
+model Chat {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  participants User[]
+  adspaces     Adspace[]
+  messages     Message[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  chatId    String
+  senderId  String
+  content   String
+  timestamp DateTime @default(now())
+
+  chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender User @relation("UserMessages", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([chatId])
+  @@index([senderId])
 }

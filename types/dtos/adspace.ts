@@ -1,6 +1,8 @@
-import { BusinessDTO } from './business';
+import { AdspaceType, Prisma } from '@prisma/client';
+import type { BusinessDTO } from './business';
+import { mapBusinessToDTO } from './business';
 
-type AdspaceDTO = {
+export type AdspaceDTO = {
   id: string;
   businessId: string;
   name: string;
@@ -15,14 +17,48 @@ type AdspaceDTO = {
   createdAt: Date;
 };
 
-type AdspacesWithBusinessDTO = AdspaceDTO & {
+export type AdspacesWithBusinessDTO = AdspaceDTO & {
   business: BusinessDTO;
 };
 
-type AdspaceTypeDTO = {
+export type AdspaceTypeDTO = {
   id: string;
   name: string;
   description?: string;
 };
 
-export type { AdspaceDTO, AdspacesWithBusinessDTO, AdspaceTypeDTO };
+type AdspaceWithType = Prisma.AdspaceGetPayload<{
+  include: { type: true };
+}>;
+
+type AdspaceWithTypeAndBusiness = Prisma.AdspaceGetPayload<{
+  include: { type: true; business: { include: { tags: true } } };
+}>;
+
+export const mapAdspaceTypeToDTO = (type: AdspaceType): AdspaceTypeDTO => ({
+  id: type.id,
+  name: type.name,
+  description: type.description ?? undefined,
+});
+
+export const mapAdspaceToDTO = (adspace: AdspaceWithType): AdspaceDTO => ({
+  id: adspace.id,
+  businessId: adspace.businessId,
+  name: adspace.name,
+  description: adspace.description ?? undefined,
+  type: mapAdspaceTypeToDTO(adspace.type),
+  maxWidth: adspace.maxWidth,
+  maxHeight: adspace.maxHeight,
+  imageUrl: adspace.imageUrl,
+  isBarterAvailable: adspace.isBarterAvailable,
+  pricePerDay: adspace.pricePerDay ?? undefined,
+  inUse: adspace.inUse,
+  createdAt: adspace.createdAt,
+});
+
+export const mapAdspaceWithBusinessToDTO = (adspace: AdspaceWithTypeAndBusiness): AdspacesWithBusinessDTO => {
+  return {
+    ...mapAdspaceToDTO(adspace),
+    business: mapBusinessToDTO(adspace.business),
+  };
+};
