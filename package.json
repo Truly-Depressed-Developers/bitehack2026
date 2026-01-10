@@ -16,6 +16,7 @@
     "db:reset": "prisma migrate reset",
     "db:migrate": "prisma migrate dev --name",
     "db:generate": "prisma generate",
+    "db:studio": "prisma studio",
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('pnpm') === -1) throw new Error('You must use PNPM to install')\""
   },
   "dependencies": {
