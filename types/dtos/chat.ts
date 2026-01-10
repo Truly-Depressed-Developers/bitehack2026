@@ -27,11 +27,8 @@ export const mapChatToDTO = (chat: ChatWithRelations): ChatDTO => {
   if (chat.participants.length !== 2) {
     throw new Error('Chat must have exactly two participants');
   }
-  
-  const participants = chat.participants.map(mapUserToDTO) as [
-    UserDTO,
-    UserDTO,
-  ];
+
+  const participants = chat.participants.map(mapUserToDTO) as [UserDTO, UserDTO];
 
   return {
     id: chat.id,
@@ -47,4 +44,3 @@ export const mapMessageToDTO = (message: Message): MessageDTO => ({
   content: message.content,
   timestamp: message.timestamp,
 });
-
