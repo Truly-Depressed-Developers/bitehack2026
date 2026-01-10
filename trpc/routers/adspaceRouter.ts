@@ -19,7 +19,7 @@ export const adspaceRouter = router({
   }),
   types: publicProcedure.query(async () => {
     const types = await prisma.adspaceType.findMany();
-    
+
     return types.map(mapAdspaceTypeToDTO);
   }),
 });
