@@ -50,7 +50,9 @@ export const mapBusinessToDTO = (business: BusinessWithTags): BusinessDTO => ({
   },
 });
 
-export const mapBusinessWithAdspacesToDTO = (business: BusinessWithAdspaces): BuisinessWithAdspacesDTO => ({
+export const mapBusinessWithAdspacesToDTO = (
+  business: BusinessWithAdspaces,
+): BuisinessWithAdspacesDTO => ({
   ...mapBusinessToDTO(business),
   adspaces: business.adspaces.map(mapAdspaceToDTO),
 });

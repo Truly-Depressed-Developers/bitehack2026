@@ -56,7 +56,9 @@ export const mapAdspaceToDTO = (adspace: AdspaceWithType): AdspaceDTO => ({
   createdAt: adspace.createdAt,
 });
 
-export const mapAdspaceWithBusinessToDTO = (adspace: AdspaceWithTypeAndBusiness): AdspacesWithBusinessDTO => {
+export const mapAdspaceWithBusinessToDTO = (
+  adspace: AdspaceWithTypeAndBusiness,
+): AdspacesWithBusinessDTO => {
   return {
     ...mapAdspaceToDTO(adspace),
     business: mapBusinessToDTO(adspace.business),

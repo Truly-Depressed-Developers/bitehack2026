@@ -9,4 +9,3 @@ export const mapTagToDTO = (tag: Tag): TagDTO => ({
   id: tag.id,
   name: tag.name,
 });
-

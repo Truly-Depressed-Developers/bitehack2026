@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { trpc } from '@/trpc/client';
 import { useMemo } from 'react';
@@ -22,13 +22,16 @@ function MessageList({ chatId }: { chatId: string }) {
   const { data, isLoading } = trpc.message.byChat.useQuery({ chatId });
 
   if (isLoading) return <div className="text-sm text-muted-foreground">Loading messages...</div>;
-  if (!data || data.length === 0) return <div className="text-sm text-muted-foreground">No messages</div>;
+  if (!data || data.length === 0)
+    return <div className="text-sm text-muted-foreground">No messages</div>;
 
   return (
     <ul className="space-y-1">
       {data.map((m) => (
         <li key={m.id} className="text-sm">
-          <span className="font-mono text-xs text-muted-foreground">{new Date(m.timestamp).toLocaleString()}:</span>{' '}
+          <span className="font-mono text-xs text-muted-foreground">
+            {new Date(m.timestamp).toLocaleString()}:
+          </span>{' '}
           <span className="font-semibold">{m.senderId}</span> — {m.content}
         </li>
       ))}
@@ -51,7 +54,13 @@ export default function Page() {
       adspacesQ.isLoading ||
       adspaceTypesQ.isLoading ||
       chatsQ.isLoading,
-    [tagsQ.isLoading, businessesQ.isLoading, adspacesQ.isLoading, adspaceTypesQ.isLoading, chatsQ.isLoading]
+    [
+      tagsQ.isLoading,
+      businessesQ.isLoading,
+      adspacesQ.isLoading,
+      adspaceTypesQ.isLoading,
+      chatsQ.isLoading,
+    ],
   );
 
   return (
@@ -95,7 +104,9 @@ export default function Page() {
             <li key={b.id}>
               <div className="font-semibold">{b.name}</div>
               <div className="text-sm text-muted-foreground">{b.address}</div>
-              <div className="text-sm">NIP: {b.nip} | PKD: {b.pkd}</div>
+              <div className="text-sm">
+                NIP: {b.nip} | PKD: {b.pkd}
+              </div>
               <div className="flex flex-wrap gap-2 mt-2">
                 {b.tags.map((t) => (
                   <Badge key={t.id} variant="outline">
