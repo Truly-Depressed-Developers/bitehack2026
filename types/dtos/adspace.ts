@@ -9,6 +9,7 @@ type AdspaceDTO = {
   maxWidth: number;
   maxHeight: number;
   imageUrl: string;
+  isBarterAvailable: boolean;
   pricePerDay?: number;
   inUse: boolean;
   createdAt: Date;
