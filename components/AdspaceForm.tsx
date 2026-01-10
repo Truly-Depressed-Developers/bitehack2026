@@ -27,6 +27,7 @@ const createAdspaceFormSchema = (typeIds: [string, ...string[]]) =>
 
 export default function AdspaceForm() {
   const { data: types, isPending, isError } = trpc.adspace.types.useQuery();
+  const { mutateAsync: createAdspace } = trpc.adspace.create.useMutation();
 
   const schema = useMemo(
     () =>
@@ -52,7 +53,7 @@ export default function AdspaceForm() {
   });
 
   const onSubmit = (data: z.infer<typeof schema>) => {
-    console.log('Form Submitted:', data);
+    createAdspace(data);
   };
 
   if (isPending) {
