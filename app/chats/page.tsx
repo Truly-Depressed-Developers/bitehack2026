@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { format, isToday, isYesterday } from 'date-fns';
 import { ChatDTO } from '@/types/dtos';
+import { PageHeader } from '@/components/PageHeader';
 
 function formatMessageTime(date: Date) {
   if (isToday(date)) {
@@ -85,9 +86,7 @@ export default function ChatsPage() {
 
   return (
     <div className="flex flex-col min-h-full bg-background">
-      <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b p-4 text-center">
-        <h1 className="text-lg font-semibold">Czaty</h1>
-      </header>
+      <PageHeader title="Czaty" />
 
       <main className="flex-1">
         {chats.length === 0 ? (
@@ -103,3 +102,4 @@ export default function ChatsPage() {
     </div>
   );
 }
+
