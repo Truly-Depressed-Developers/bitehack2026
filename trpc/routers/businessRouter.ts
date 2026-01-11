@@ -1,9 +1,29 @@
 import { prisma } from '@/prisma/prisma';
 import { mapBusinessWithAdspacesToDTO } from '@/types/dtos';
-import { publicProcedure, router } from '../init';
+import { protectedProcedure, publicProcedure, router } from '../init';
 import { z } from 'zod';
 
 export const businessRouter = router({
+  mine: protectedProcedure.query(async ({ ctx }) => {
+    const business = await prisma.business.findFirst({
+      where: {
+        ownerId: ctx.user.id,
+      },
+      include: {
+        tags: true,
+        adspaces: {
+          include: {
+            type: true,
+          },
+        },
+        owner: true,
+      },
+    });
+
+    if (!business) return null;
+
+    return mapBusinessWithAdspacesToDTO(business);
+  }),
   list: publicProcedure.query(async () => {
     const businesses = await prisma.business.findMany({
       include: {
