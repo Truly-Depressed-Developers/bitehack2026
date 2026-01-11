@@ -42,7 +42,7 @@ export function AdspaceMap() {
 
   const filteredAdspaces = useMemo(
     () => filterAdspaces(adspaces ?? [], filters),
-    [adspaces, filters]
+    [adspaces, filters],
   );
 
   if (!mounted || isLoading) {

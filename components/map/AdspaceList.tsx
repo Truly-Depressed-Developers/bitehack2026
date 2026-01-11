@@ -18,7 +18,7 @@ export function AdspaceList() {
 
   const filteredAdspaces = useMemo(
     () => filterAdspaces(adspaces ?? [], filters),
-    [adspaces, filters]
+    [adspaces, filters],
   );
 
   if (isLoading) {
