@@ -18,7 +18,14 @@ export default function ChatPage() {
   const [message, setMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { data: chat, isLoading, refetch } = trpc.chat.getById.useQuery({ id });
+  const { data: chat, isLoading, refetch } = trpc.chat.getById.useQuery(
+    { id },
+    {
+      refetchInterval: 2000,
+      refetchIntervalInBackground: false,
+    }
+  );
+  
   const sendMessageMutation = trpc.chat.sendMessage.useMutation({
     onSuccess: () => {
       refetch();

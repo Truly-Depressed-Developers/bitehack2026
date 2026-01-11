@@ -1,6 +1,7 @@
 import { prisma } from '@/prisma/prisma';
 import { mapChatToDTO, mapChatWithMessagesToDTO } from '@/types/dtos';
 import { protectedProcedure, router } from '../init';
+import { findMatchingResponse } from '@/lib/chatResponses';
 import { z } from 'zod';
 
 export const chatRouter = router({
@@ -103,6 +104,11 @@ export const chatRouter = router({
         where: { id: input.chatId },
         include: {
           participants: true,
+          adspaces: {
+            include: {
+              business: true,
+            },
+          },
         },
       });
 
@@ -123,6 +129,30 @@ export const chatRouter = router({
           isRead: false,
         },
       });
+
+      const adspace = chat.adspaces[0];
+
+      if (adspace) {
+        const autoResponse = findMatchingResponse(input.content, {
+          ...adspace,
+          pricePerWeek: adspace.pricePerWeek ?? undefined,
+        });
+        if (autoResponse) {
+          const chatOwner = chat.participants.find((p) => p.id !== ctx.user.id);
+          if (chatOwner) {
+            setTimeout(async () => {
+              await prisma.message.create({
+                data: {
+                  chatId: input.chatId,
+                  senderId: chatOwner.id,
+                  content: autoResponse,
+                  isRead: false,
+                },
+              });
+            }, 1000);
+          }
+        }
+      }
 
       return {
         id: message.id,
