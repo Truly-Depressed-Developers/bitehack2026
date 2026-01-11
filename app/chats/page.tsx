@@ -45,7 +45,7 @@ function ChatItem({ chat }: { chat: ChatDTO }) {
         <div className="flex justify-between items-baseline mb-1">
           <h3 className="font-medium text-[16px] truncate pr-2 text-foreground">{displayName}</h3>
           {lastMessage && (
-            <span className="text-xs text-muted-foreground whitespace-nowrap flex-shrink-0">
+            <span className="text-xs text-muted-foreground whitespace-nowrap shrink-0">
               {formatMessageTime(new Date(lastMessage.timestamp))}
             </span>
           )}
@@ -61,7 +61,7 @@ function ChatItem({ chat }: { chat: ChatDTO }) {
             )}
           </p>
           {chat.unreadCount > 0 && (
-            <div className="h-2.5 w-2.5 bg-blue-500 rounded-full flex-shrink-0" />
+            <div className="h-2.5 w-2.5 bg-blue-500 rounded-full shrink-0" />
           )}
         </div>
       </div>

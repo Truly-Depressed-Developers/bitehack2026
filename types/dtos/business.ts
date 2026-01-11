@@ -28,7 +28,7 @@ export type Coordinates = {
   longitude: number;
 };
 
-type BusinessData = Prisma.BusinessGetPayload<{
+export type BusinessData = Prisma.BusinessGetPayload<{
   include: {
     tags: true;
     owner: true;
