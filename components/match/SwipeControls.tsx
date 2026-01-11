@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { X, Heart } from '@phosphor-icons/react';
+import { XIcon, HeartIcon } from '@phosphor-icons/react';
 
 type SwipeControlsProps = {
   onSwipeLeft: () => void;
@@ -18,7 +18,7 @@ export function SwipeControls({ onSwipeLeft, onSwipeRight, disabled }: SwipeCont
         onClick={onSwipeLeft}
         disabled={disabled}
       >
-        <X size={32} weight="bold" />
+        <XIcon size={32} weight="bold" />
       </Button>
 
       <Button
@@ -27,7 +27,7 @@ export function SwipeControls({ onSwipeLeft, onSwipeRight, disabled }: SwipeCont
         onClick={onSwipeRight}
         disabled={disabled}
       >
-        <Heart size={32} weight="fill" />
+        <HeartIcon size={32} weight="fill" />
       </Button>
     </div>
   );

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { SwipeCard } from '@/components/match/SwipeCard';
 import { SwipeControls } from '@/components/match/SwipeControls';
 import { MatchDialog } from '@/components/match/MatchDialog';
+import { PageHeader } from '@/components/PageHeader';
 
 export default function MatchPage() {
   const { status } = useSession();
@@ -21,7 +22,7 @@ export default function MatchPage() {
     data: currentCard,
     isLoading,
     isError,
-    refetch,
+    refetch: fetchNextCard,
   } = trpc.match.getNextCard.useQuery(undefined, {
     enabled: status === 'authenticated',
   });
@@ -36,7 +37,7 @@ export default function MatchPage() {
         setMatchDialogOpen(true);
       }
       // Fetch next card
-      refetch();
+      fetchNextCard();
     },
   });
 
@@ -89,7 +90,7 @@ export default function MatchPage() {
     return (
       <div className="flex min-h-dvh w-full flex-col items-center justify-center gap-4 bg-background">
         <p className="text-lg font-medium">Wystapil blad</p>
-        <Button onClick={() => refetch()}>Sprobuj ponownie</Button>
+        <Button onClick={() => fetchNextCard()}>Sprobuj ponownie</Button>
       </div>
     );
   }
@@ -112,9 +113,7 @@ export default function MatchPage() {
   return (
     <div className="flex flex-col min-h-dvh bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b p-4 text-center">
-        <h1 className="text-lg font-semibold">Odkrywaj</h1>
-      </header>
+      <PageHeader title="Odkrywaj" hideLine={true} />
 
       {/* Card container */}
       <main className="flex-1 flex flex-col items-center justify-center p-4">

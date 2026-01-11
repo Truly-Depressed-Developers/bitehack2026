@@ -1,6 +1,7 @@
 import { prisma } from '@/prisma/prisma';
 import { protectedProcedure, router } from '../init';
 import { z } from 'zod';
+import { mapSwipeCardBusinessToDTO } from '@/types/dtos/match';
 
 export const matchRouter = router({
   getNextCard: protectedProcedure.query(async ({ ctx }) => {
@@ -39,7 +40,7 @@ export const matchRouter = router({
 
     // Pick a random one
     const randomIndex = Math.floor(Math.random() * businesses.length);
-    return businesses[randomIndex];
+    return mapSwipeCardBusinessToDTO(businesses[randomIndex]);
   }),
 
   swipe: protectedProcedure
