@@ -47,7 +47,7 @@ async function createBusiness(
   longitude: number,
   ownerId: string,
   tagIds: string[],
-  logoUrl?: string
+  logoUrl?: string,
 ) {
   const business = await prisma.business.create({
     data: {
@@ -184,7 +184,7 @@ async function main() {
     19.9372,
     user1.id,
     [tagKawiarnia.id, tagRestauracja.id],
-    '/logo_1.png'
+    '/logo_1.png',
   );
 
   const business2 = await createBusiness(
@@ -198,7 +198,7 @@ async function main() {
     19.9465,
     user2.id,
     [tagKawiarnia.id],
-    '/logo_2.png'
+    '/logo_2.png',
   );
 
   const business3 = await createBusiness(
@@ -212,7 +212,7 @@ async function main() {
     20.0373,
     user3.id,
     [tagHandel.id],
-    '/logo_3.png'
+    '/logo_3.png',
   );
 
   const business4 = await createBusiness(
@@ -335,7 +335,7 @@ async function main() {
     'Billboard przy centrum handlowym, duży ruch pieszych i samochodów',
     800,
     400,
-    'https://placehold.co/800x400',
+    '/offer_2.png',
     true,
     1200,
   );
@@ -348,7 +348,7 @@ async function main() {
     'Nowoczesny ekran LED z możliwością wyświetlania animacji',
     1920,
     1080,
-    'https://placehold.co/1920x1080',
+    '/offer_3.png',
     false,
     2500,
   );
@@ -361,7 +361,7 @@ async function main() {
     'Elegancka witryna restauracji na ul. Grodzkiej',
     180,
     120,
-    'https://placehold.co/180x120',
+    '/offer_1.png',
     true,
   );
 
@@ -373,7 +373,7 @@ async function main() {
     'Miejsce na plakat przy kasie restauracji',
     50,
     70,
-    'https://placehold.co/50x70',
+    '/offer_2.png',
     true,
     30,
   );
@@ -386,7 +386,7 @@ async function main() {
     'Duży baner w głównej alei centrum handlowego',
     500,
     150,
-    'https://placehold.co/500x150',
+    '/offer_3.png',
     false,
     450,
   );
@@ -399,7 +399,7 @@ async function main() {
     'Ekran LED przy wjeździe na parking centrum',
     1280,
     720,
-    'https://placehold.co/1280x720',
+    '/offer_1.png',
     true,
     1800,
   );
@@ -412,7 +412,7 @@ async function main() {
     'Mniejszy billboard przy Plant, idealne miejsce dla lokalnych firm',
     400,
     200,
-    'https://placehold.co/400x200',
+    '/offer_2.png',
     true,
   );
 
@@ -424,7 +424,7 @@ async function main() {
     'Boczna witryna kawiarni, mniejsza ale z dobrą widocznością',
     100,
     80,
-    'https://placehold.co/100x80',
+    '/offer_3.png',
     false,
     50,
   );
