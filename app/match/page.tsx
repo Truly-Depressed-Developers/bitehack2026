@@ -6,9 +6,7 @@ import Link from 'next/link';
 import { trpc } from '@/trpc/client';
 import { Button } from '@/components/ui/button';
 import { SwipeCard } from '@/components/match/SwipeCard';
-import { SwipeControls } from '@/components/match/SwipeControls';
 import { MatchDialog } from '@/components/match/MatchDialog';
-import { PageHeader } from '@/components/PageHeader';
 
 export default function MatchPage() {
   const { status } = useSession();
@@ -111,21 +109,18 @@ export default function MatchPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-dvh bg-background">
-      {/* Header */}
-      <PageHeader title="Odkrywaj" hideLine={true} />
-
-      {/* Card container */}
-      <main className="flex-1 flex flex-col items-center justify-center p-4">
-        <SwipeCard business={currentCard} />
-        <SwipeControls
-          onSwipeLeft={() => handleSwipe('left')}
-          onSwipeRight={() => handleSwipe('right')}
-          disabled={swipeMutation.isPending}
-        />
+    <div className="flex flex-col h-full bg-background">
+      <main className="flex-1 flex flex-col items-center justify-center overflow-hidden">
+        <div className="relative w-full max-w-sm h-full flex items-center justify-center">
+          <SwipeCard 
+            key={currentCard.id}
+            business={currentCard}
+            onSwipeLeft={() => handleSwipe('left')}
+            onSwipeRight={() => handleSwipe('right')}
+          />
+        </div>
       </main>
 
-      {/* Match Dialog */}
       {matchInfo && (
         <MatchDialog
           open={matchDialogOpen}
