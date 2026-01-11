@@ -37,8 +37,6 @@ export const adspaceRouter = router({
       },
     });
 
-    console.log(adspaces, ctx.user.id);
-
     return adspaces.map(mapAdspaceWithBusinessToDTO);
   }),
   types: publicProcedure.query(async () => {
