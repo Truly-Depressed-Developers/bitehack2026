@@ -1,6 +1,6 @@
 # syntax=docker.io/docker/dockerfile:1
 
-FROM node:20.19.0-alpine AS base
+FROM node:24-alpine AS base
 
 ARG NEXT_PUBLIC_SUPABASE_URL
 ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -31,7 +31,16 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Set DATABASE_URL to absolute path for build and runtime
+ENV DATABASE_URL="file:/app/data/prod.db"
+
 RUN npx prisma generate
+
+# Create database directory and run migrations + seed
+RUN mkdir -p /app/data && \
+    npx prisma db push && \
+    npx prisma db seed
+
 RUN corepack enable pnpm && pnpm run build
 
 # Production image, copy all the files and run next
@@ -42,6 +51,11 @@ ENV NODE_ENV=production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Set DATABASE_URL to absolute path for runtime
+ENV DATABASE_URL="file:/app/data/prod.db"
+ENV NEXTAUTH_URL="https://adswap.spookyless.net"
+ENV NEXTAUTH_SECRET="dupa123hahaha2137XD67"
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
@@ -51,6 +65,9 @@ COPY --from=builder /app/public ./public
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Copy the seeded database
+COPY --from=builder --chown=nextjs:nodejs /app/data ./data
 
 USER nextjs
 
