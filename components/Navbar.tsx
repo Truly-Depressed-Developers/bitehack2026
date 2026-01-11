@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MapTrifoldIcon, NoteIcon, ChatCircleDotsIcon, UserIcon } from '@phosphor-icons/react';
+import { useNavbar } from '@/hooks/useNavbar';
 
 type NavItem = {
   href: string;
@@ -35,10 +36,15 @@ const navItems: NavItem[] = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const { isVisible } = useNavbar();
 
   const isActive = (href: string) => {
     return pathname.startsWith(href);
   };
+
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 border-t bg-background md:hidden">

@@ -10,7 +10,7 @@ export default withAuth(
       authorized: ({ token, req }) => {
         const pathname = req.nextUrl.pathname;
 
-        const publicPaths = ['/auth/signin', '/auth/register'];
+        const publicPaths = ['/guest', '/auth/signin', '/auth/register'];
 
         if (publicPaths.some((path) => pathname.startsWith(path))) {
           return true;
@@ -20,7 +20,7 @@ export default withAuth(
       },
     },
     pages: {
-      signIn: '/',
+      signIn: '/guest',
     },
   },
 );

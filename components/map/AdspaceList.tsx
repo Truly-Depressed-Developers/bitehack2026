@@ -62,7 +62,7 @@ export function AdspaceList() {
             filteredAdspaces.map((adspace) => (
               <Link
                 key={adspace.id}
-                href={`/oferty/${adspace.id}`}
+                href={`/offers/${adspace.id}`}
                 className="flex gap-3 rounded-xl border bg-card p-3 transition-colors hover:bg-muted/50 items-center"
               >
                 {/* Image */}
