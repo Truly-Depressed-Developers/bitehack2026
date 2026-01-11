@@ -9,9 +9,12 @@ import {
   StarIcon,
   SunIcon,
 } from '@phosphor-icons/react';
+import { Button } from '@/components/ui/button';
+import { signOut, useSession } from 'next-auth/react';
 
 export default function ProfilePage() {
   const { data: business } = trpc.business.mine.useQuery();
+  const { data: session } = useSession();
 
   const settingsOptions = [
     {
@@ -53,6 +56,19 @@ export default function ProfilePage() {
             <SettingsItem key={index} icon={option.icon} label={option.label} href={option.href} />
           ))}
         </div>
+
+        
+      {session && (
+        <div className="mt-4 flex items-center gap-2">
+          Zalogowany użytkownik:
+          <span className="text-sm text-muted-foreground">
+            {session.user.firstName} {session.user.lastName}
+          </span>
+          <Button variant="destructive" size="sm" onClick={() => signOut({ callbackUrl: '/' })}>
+            Logout
+          </Button>
+        </div>
+      )}
       </main>
     </div>
   );
