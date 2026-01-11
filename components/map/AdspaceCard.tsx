@@ -13,7 +13,7 @@ type AdspaceCardProps = {
 export function AdspaceCard({ adspace }: AdspaceCardProps) {
   return (
     <Link
-      href={`/oferty/${adspace.id}`}
+      href={`/offers/${adspace.id}`}
       className="flex gap-3 rounded-xl border bg-card p-3 transition-colors hover:bg-muted/50 items-center"
     >
       {/* Image */}
@@ -24,7 +24,7 @@ export function AdspaceCard({ adspace }: AdspaceCardProps) {
       {/* Content */}
       <div className="flex flex-1 flex-col">
         {/* Header with title and price */}
-        <h3 className="font-semibold leading-tight m-0 mb-1">{adspace.name}</h3>
+        <h3 className="font-medium leading-tight m-0 mb-1">{adspace.name}</h3>
 
         {/* Subtitle */}
         <p className="text-sm text-muted-foreground mb-2">
@@ -35,11 +35,11 @@ export function AdspaceCard({ adspace }: AdspaceCardProps) {
         <div className="flex justify-between flex-row w-full items-center mb-3">
           <div className="flex items-center gap-1">
             <StarIcon size={16} className="text-yellow-400" weight="fill" />
-            <span className="text-sm font-medium">4.8</span>
-            <span className="text-sm text-muted-foreground">(12 opinii)</span>
+            <span className="font-medium">4.8</span>
+            <span className="text-muted-foreground">(12 opinii)</span>
           </div>
           {adspace.pricePerWeek && (
-            <span className="shrink-0 text-sm font-semibold">
+            <span className="shrink-0 font-medium">
               {adspace.pricePerWeek}zł / tyg
             </span>
           )}

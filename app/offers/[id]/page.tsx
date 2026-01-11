@@ -10,6 +10,7 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 const defaultIcon = L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
@@ -77,15 +78,15 @@ export default function OfferDetailPage() {
       <div className="flex-1 p-4 space-y-4">
         {/* Title */}
         <div>
-          <h1 className="text-xl font-bold mb-1">{adspace.name}</h1>
-          <p className="text-sm text-muted-foreground">
+          <h1 className="text-xl font-medium mb-1">{adspace.name}</h1>
+          <p className="text-base text-muted-foreground">
             2km stąd • {adspace.business.address.split(',')[0]}
           </p>
         </div>
 
         {/* Description */}
         {adspace.description && (
-          <p className="text-sm text-muted-foreground leading-relaxed">{adspace.description}</p>
+          <p className="text-base leading-relaxed">{adspace.description}</p>
         )}
 
         {/* Badges and price row */}
@@ -95,39 +96,46 @@ export default function OfferDetailPage() {
             <FeatureBadge label="Sprzedaż" active={adspace.pricePerWeek !== undefined} />
           </div>
           {adspace.pricePerWeek && (
-            <span className="font-semibold">{adspace.pricePerWeek}zł / tyg</span>
+            <span className="font-medium">{adspace.pricePerWeek}zł / tyg</span>
           )}
         </div>
 
         {/* Details section */}
         <div className="space-y-3 py-2">
-          {adspace.business.imageUrl && (
+          {adspace.business.website && (
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Strona internetowa:</span>
+              <span className="text-base font-medium">Strona internetowa:</span>
               <div className="flex items-center gap-2">
-                <GlobeIcon size={16} className="text-muted-foreground" />
-                <span className="text-sm">
-                  {adspace.business.name.toLowerCase().replace(/\s+/g, '-')}.pl
-                </span>
+                <GlobeIcon size={20} />
+                {/* //open a href to external website */}
+                <a
+                  href={adspace.business.website.startsWith('http') ? adspace.business.website : `https://${adspace.business.website}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-base underline hover:text-primary"
+                >
+                  {adspace.business.website}
+                </a>
+                
               </div>
             </div>
           )}
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Typ reklamy:</span>
-            <span className="text-sm">{adspace.type.name}</span>
+            <span className="text-base  font-medium">Typ reklamy:</span>
+            <span className="text-base">{adspace.type.name}</span>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Wymiary:</span>
-            <span className="text-sm">
+            <span className="text-base  font-medium">Wymiary:</span>
+            <span className="text-base">
               {adspace.maxWidth} x {adspace.maxHeight} cm
             </span>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Grupa docelowa:</span>
-            <span className="text-sm">{adspace.business.targetAudience}</span>
+            <span className="text-base font-medium">Grupa docelowa:</span>
+            <span className="text-base">{adspace.business.targetAudience}</span>
           </div>
         </div>
 
@@ -148,18 +156,18 @@ export default function OfferDetailPage() {
             )}
           </div>
           <div>
-            <p className="font-semibold">{adspace.business.name}</p>
+            <p className="font-medium">{adspace.business.name}</p>
             <div className="flex items-center gap-1">
               <StarIcon size={14} className="text-yellow-400" weight="fill" />
-              <span className="text-sm">4.8</span>
-              <span className="text-sm text-muted-foreground">(12 opinii)</span>
+              <span className="text-base font-medium">4.8</span>
+              <span className="text-base text-muted-foreground">(12 opinii)</span>
             </div>
           </div>
         </div>
 
         {/* Map in bordered box */}
         {coords && (
-          <div className="rounded-xl border overflow-hidden h-40">
+          <div className="rounded-xl border overflow-hidden h-55">
             {mounted && (
               <MapContainer
                 center={[coords.latitude, coords.longitude]}
