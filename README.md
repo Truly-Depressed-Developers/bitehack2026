@@ -24,8 +24,10 @@ Innovative platform for physical advertising exchange, connecting local business
 
 [Presentation](media\AdSwap_Truly_Depressed_Developers.pptx)
 
-<!-- TODO screenshots -->
-
+![mockup 1](media/mockup_1.png)
+![mockup 2](media/mockup_2.png)
+![mockup 3](media/mockup_3.png)
+![mockup 4](media/mockup_4.png)
 
 # Authors
 
